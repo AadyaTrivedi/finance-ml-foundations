@@ -4,26 +4,43 @@ import pandas as pd
 incomes = []
 expenses = []
 savings = []
-months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun",
-          "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"]
+debts = []
+expense_ratio = []
+saving_ratio = []
+debt_ratio = []
+
 
 
 for i in range(12):
-    income = random.randint(10000, 100000)
-    expense = income * 0.7
+    income = random.randint(100, 1000)
+    expense = income * random.uniform(0.5, 0.95)
     save = income - expense
+    debt = random.randint(200, 900)
+    ex_ratio = expense/income
+    save_ratio = save/income
+    de_ratio = debt/income
 
     incomes.append(income)
     expenses.append(expense)
     savings.append(save)
+    debts.append(debt)
+    expense_ratio.append(ex_ratio)
+    saving_ratio.append(save_ratio)
+    debt_ratio.append(de_ratio)
+
+
 
 df = pd.DataFrame({
-    "month": months,
     "monthly_income": incomes,
     "monthly_expenses": expenses,
-    "monthly_savings": savings
+    "monthly_savings": savings,
+    "monthly_debts": debts,
+    "expense_ratio": expense_ratio,
+    "saving_ratio": saving_ratio,
+    "debt_ratio": debt_ratio
 })
 
 
 df.to_csv("personal_finance_data.csv", index=False)
+
 
