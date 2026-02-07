@@ -1,6 +1,8 @@
 import random
 import pandas as pd
 
+random.seed(42)
+
 incomes = []
 expenses = []
 savings = []
@@ -9,20 +11,25 @@ expense_ratio = []
 saving_ratio = []
 debt_ratio = []
 emergency_fund_months = []
-
-
+stress_levels = []
 
 for i in range(400):
     income = random.randint(100, 1000)
-    expense = income * random.uniform(0.5, 0.95)
-    save = income - expense
-    debt = random.uniform(0, income * 6)
-    ex_ratio = expense/income
-    save_ratio = save/income
-    de_ratio = debt/income
-    emergency_fund = save/expense if expense > 0 else 0
+    expense = round(income * random.uniform(0.3, 0.95), 2)
+    save = round(income - expense, 2)
+    debt = round(random.uniform(0, income * 4.5), 2)
+    ex_ratio = round(expense / income, 2)
+    save_ratio = round(save / income, 2)
+    de_ratio = round(debt / income, 2)
+    emergency_fund = round(save / expense, 2) if expense > 0 else 0
 
 
+    if (ex_ratio > 0.85 and save_ratio < 0.1) or (emergency_fund < 0.5 and de_ratio > 0.6):
+        stress = "High"
+    elif ex_ratio > 0.75 or save_ratio <0.19:
+        stress = "Medium"
+    else:
+        stress = "Low"
 
     incomes.append(income)
     expenses.append(expense)
@@ -32,8 +39,7 @@ for i in range(400):
     saving_ratio.append(save_ratio)
     debt_ratio.append(de_ratio)
     emergency_fund_months.append(emergency_fund)
-
-
+    stress_levels.append(stress)
 
 
 df = pd.DataFrame({
@@ -44,9 +50,10 @@ df = pd.DataFrame({
     "expense_ratio": expense_ratio,
     "saving_ratio": saving_ratio,
     "debt_ratio": debt_ratio,
-    "emergency_fund_months": emergency_fund_months
+    "emergency_fund_months": emergency_fund_months,
+    "stress_levels": stress_levels
 })
 
-
 df.to_csv("personal_finance_data.csv", index=False)
-
+print(df.head())
+print(df["stress_levels"].value_counts())
