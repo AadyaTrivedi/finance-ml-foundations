@@ -11,7 +11,7 @@ debt_ratio = []
 
 
 
-for i in range(12):
+for i in range(400):
     income = random.randint(100, 1000)
     expense = income * random.uniform(0.5, 0.95)
     save = income - expense
@@ -42,5 +42,4 @@ df = pd.DataFrame({
 
 
 df.to_csv("personal_finance_data.csv", index=False)
-
 
