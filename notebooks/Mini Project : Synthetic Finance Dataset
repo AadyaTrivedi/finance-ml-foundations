@@ -8,6 +8,7 @@ debts = []
 expense_ratio = []
 saving_ratio = []
 debt_ratio = []
+emergency_fund_months = []
 
 
 
@@ -15,10 +16,13 @@ for i in range(400):
     income = random.randint(100, 1000)
     expense = income * random.uniform(0.5, 0.95)
     save = income - expense
-    debt = random.randint(200, 900)
+    debt = random.uniform(0, income * 6)
     ex_ratio = expense/income
     save_ratio = save/income
     de_ratio = debt/income
+    emergency_fund = save/expense if expense > 0 else 0
+
+
 
     incomes.append(income)
     expenses.append(expense)
@@ -27,6 +31,8 @@ for i in range(400):
     expense_ratio.append(ex_ratio)
     saving_ratio.append(save_ratio)
     debt_ratio.append(de_ratio)
+    emergency_fund_months.append(emergency_fund)
+
 
 
 
@@ -34,10 +40,11 @@ df = pd.DataFrame({
     "monthly_income": incomes,
     "monthly_expenses": expenses,
     "monthly_savings": savings,
-    "monthly_debts": debts,
+    "total_debt": debts,
     "expense_ratio": expense_ratio,
     "saving_ratio": saving_ratio,
-    "debt_ratio": debt_ratio
+    "debt_ratio": debt_ratio,
+    "emergency_fund_months": emergency_fund_months
 })
 
 
